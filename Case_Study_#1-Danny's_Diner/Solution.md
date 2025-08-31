@@ -79,20 +79,21 @@ INNER JOIN dannys_diner.menu
 )
     
 SELECT 
-	customer_id, 
+	customer_id,
+	order_date,
     product_name
 FROM sort_sales
 WHERE sort = 1 
-GROUP BY customer_id, product_name;
+GROUP BY customer_id, order_date, product_name;
 ````
-The following table shows the first item that was purchased by each customer:
+The following table shows the first item that was purchased by each customer on 2021-01-01:
 
-| customer_id    | product_name | 
-|:--------------:|:------------:|
-|     A          |     Curry    |
-|     A          |     Sushi    |
-|     B          |     Curry    |
-|     C          |     Ramen    |
+| customer_id    | order_date   |  product_name | 
+|:--------------:|:------------:|:-------------:|
+|     A          | 2021-01-01   |   Curry       |
+|     A          | 2021-01-01   |   Sushi       |
+|     B          | 2021-01-01   |   Curry       |
+|     C          | 2021-01-01   |   Ramen       |
 
 **4. What is the most purchased item on the menu and how many times was it purchased by all customers?**
 
@@ -106,7 +107,7 @@ INNER JOIN dannys_diner.menu
 GROUP BY menu.product_name 
 ORDER BY most_purchased DESC; 
 ````
-The most purchased items are Ramen, Curry and Shushi. The table below depicts the number of times they have been purchased: 
+The most purchased items are Ramen, Curry and Sushi. The table below depicts the number of times they have been purchased since 2021-01-01: 
 
 | product_name   | most_purchased | 
 |:--------------:|:--------------:|
@@ -138,7 +139,7 @@ SELECT
 FROM most_popular
 WHERE rank = 1; 
 ````
-The table below shows the most purchased products per customer. One customer may have more than 1 popular item.  
+The table below shows the most purchased products per customer. One customer may have more than one popular item.  
 
 | customer_id   | product_name | most_purchased |
 |:-------------:|:------------:|:--------------:|
@@ -229,8 +230,8 @@ INNER JOIN dannys_diner.menu
 GROUP BY sales.customer_id 
 ORDER BY sales.customer_id ASC; 
 ````
-Customer A bought a total of 2 items before they became a member amounting it to $25 dollars. 
-Customer B bought a total of 3 items before they became a member amounting it to $40 dollars. 
+Customer A bought a total of 2 items before they became a member amounting a total of $25 dollars. 
+Customer B bought a total of 3 items before they became a member amounting a total of $40 dollars. 
 
 | customer_id   | total_items  | total_sales    |
 |:-------------:|:------------:|:--------------:|
