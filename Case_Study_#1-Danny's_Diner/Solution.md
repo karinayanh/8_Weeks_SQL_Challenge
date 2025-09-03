@@ -133,11 +133,11 @@ FROM dannys_diner.sales
   INNER JOIN Most_purchased ON Most_purchased.product_name = menu.product_name 
   GROUP BY customer_id, menu.product_name; 
 ````
-| Customer| product_name   | most_purchased | 
-|:-------:|:--------------:|:--------------:|
-|    A    |     Ramen      |     3          |
-|    B    |     Ramen      |     2          |
-|    C    |     Ramen      |     3          |
+| customer_id| product_name   | most_purchased | 
+|:----------:|:--------------:|:--------------:|
+|    A       |     Ramen      |     3          |
+|    B       |     Ramen      |     2          |
+|    C       |     Ramen      |     3          |
 
 **5. Which item was the most popular for each customer?**
 
