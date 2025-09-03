@@ -105,15 +105,39 @@ FROM dannys_diner.sales
 INNER JOIN dannys_diner.menu 
 	ON sales.product_id = menu.product_id
 GROUP BY menu.product_name 
-ORDER BY most_purchased DESC; 
+ORDER BY most_purchased DESC
+LIMIT 1; 
 ````
-The most purchased items are Ramen, Curry and Sushi. The table below depicts the number of times they have been purchased since 2021-01-01: 
+The most purchased item is Ramen. The table below depicts the number of times it was purchased since 2021-01-01: 
 
 | product_name   | most_purchased | 
 |:--------------:|:--------------:|
 |     Ramen      |     8          |
-|     Curry      |     4          |
-|     Sushi      |     3          |
+
+If we want to have a breakdown of how many items each customer bought the most popular item since 2021-01-01. The SQL code will be:
+
+````sql
+With Most_purchased AS (
+  SELECT menu.product_name,
+  		 COUNT(menu.product_name) AS purchase_times
+  FROM dannys_diner.menu 
+  INNER JOIN dannys_diner.sales 
+  ON sales.product_id = menu.product_id 
+  GROUP BY menu.product_name 
+  ORDER BY COUNT(menu.product_name) DESC
+  LIMIT 1 )
+  
+SELECT customer_id, menu.product_name, COUNT(menu.product_name) AS purchased_times 
+FROM dannys_diner.sales
+  INNER JOIN dannys_diner.menu ON menu.product_id = sales.product_id
+  INNER JOIN Most_purchased ON Most_purchased.product_name = menu.product_name 
+  GROUP BY customer_id, menu.product_name; 
+````
+| Customer| product_name   | most_purchased | 
+|:-------:|:--------------:|:--------------:|
+|    A    |     Ramen      |     3          |
+|    B    |     Ramen      |     2          |
+|    C    |     Ramen      |     3          |
 
 **5. Which item was the most popular for each customer?**
 
